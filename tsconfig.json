@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "types": ["node", "@wdio/globals/types", "@wdio/cucumber-framework", "expect-webdriverio"]
+  },
+  "ts-node": { "files": true, "transpileOnly": true },
+  "include": ["Framework/**/*.ts", "tests/**/*.ts", "types/**/*.d.ts", "wdio.*.conf.ts"],
+  "exclude": ["node_modules", "Reports"]
+}

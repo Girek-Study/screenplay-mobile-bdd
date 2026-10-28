@@ -1,0 +1,51 @@
+{
+  "name": "screenplay-mobile-bdd",
+  "version": "1.0.0",
+  "description": "Framework de automatizacion movil con patron Screenplay en capas numeradas: WebdriverIO, Appium, Cucumber y TypeScript. Android e iOS con una sola suite.",
+  "license": "MIT",
+  "author": "Giancarlo Palomino (Girek Study)",
+  "keywords": [
+    "screenplay",
+    "appium",
+    "webdriverio",
+    "cucumber",
+    "bdd",
+    "android",
+    "ios",
+    "mobile-testing",
+    "qa-automation"
+  ],
+  "scripts": {
+    "app:descargar": "node scripts/descargar-app-demo.js android",
+    "app:descargar:ios": "node scripts/descargar-app-demo.js ios",
+    "appium": "appium --relaxed-security",
+    "test": "node -r ts-node/register Framework/0010.Runners/R001.Run.Test.Mobile.ts",
+    "test:android": "cross-env MOBILE_PLATFORM=android npm test",
+    "test:ios": "cross-env MOBILE_PLATFORM=ios npm test",
+    "test:smoke": "npm test -- --tags \"@smoke and not @wip\"",
+    "test:regresion": "npm test -- --tags \"@regresion\"",
+    "unit": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.10.2",
+    "@wdio/cli": "^9.5.1",
+    "@wdio/cucumber-framework": "^9.5.1",
+    "@wdio/globals": "^9.5.1",
+    "@wdio/local-runner": "^9.5.1",
+    "@wdio/spec-reporter": "^9.5.1",
+    "@wdio/types": "^9.5.1",
+    "appium": "^2.13.1",
+    "appium-uiautomator2-driver": "^3.9.4",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "expect-webdriverio": "^6.0.9",
+    "fs-extra": "^11.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8",
+    "webdriverio": "^9.5.1"
+  }
+}

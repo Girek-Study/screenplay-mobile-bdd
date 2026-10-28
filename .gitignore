@@ -1,0 +1,10 @@
+node_modules/
+Reports/
+apps/
+.env
+.env.*
+!.env.example
+!.env.android.example
+!.env.ios.example
+*.log
+.DS_Store

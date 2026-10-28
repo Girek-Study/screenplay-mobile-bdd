@@ -1,0 +1,71 @@
+name: Suite movil
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  estatico:
+    name: Tipos y unitarias
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: cp .env.example .env && cp .env.android.example .env.android
+      - run: npm run typecheck
+      - run: npm run unit
+
+  escenarios:
+    name: Escenarios en emulador Android
+    runs-on: ubuntu-latest
+    needs: estatico
+    # El emulador necesita aceleracion por hardware, que los runners compartidos
+    # de GitHub no dan en macOS. En ubuntu-latest funciona con KVM.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Habilitar KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' \
+            | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - run: npm ci
+      - run: cp .env.example .env && cp .env.android.example .env.android
+      - run: npm run app:descargar
+
+      - name: Appium en segundo plano
+        run: |
+          npx appium --relaxed-security > appium.log 2>&1 &
+          until curl -s http://127.0.0.1:4723/status > /dev/null; do sleep 1; done
+          echo "Appium listo"
+
+      - name: Emulador y suite
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          script: npm test
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: evidencia
+          path: |
+            Reports/
+            appium.log
+          retention-days: 7
