@@ -1,6 +1,13 @@
 node_modules/
-Reports/
-apps/
+
+# Con la barra delante: solo la carpeta de informes de la raiz.
+#
+# Escrito como "Reports/" ignora CUALQUIER carpeta con ese nombre a cualquier
+# profundidad, y aqui existe Framework/0009.Utils/Reports/ con codigo dentro.
+# El repositorio se publico sin ese archivo y solo lo delato el typecheck del
+# CI, porque en Windows nadie lo echa de menos: sigue estando en el disco.
+/Reports/
+/apps/
 .env
 .env.*
 !.env.example
