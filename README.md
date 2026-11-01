@@ -37,6 +37,32 @@ app pública.
 
 ---
 
+## Antes del código: el trabajo de calidad
+
+<img src="docs/assets/suite-vs-hallazgos.png" alt="4 escenarios y 15 pasos en verde, frente a 9 hallazgos que la suite no detecta" />
+
+Un repositorio de automatización enseña **cómo** se automatiza. No enseña qué se decidió
+probar, ni por qué, ni qué se dejó fuera. Eso está en **[`docs/`](docs/)**:
+
+| | |
+| --- | --- |
+| [Análisis funcional](docs/01-analisis-funcional.md) | Las trece reglas de la app, y las cuatro cosas que el árbol de vistas dice y nadie mira |
+| [Diseño de casos](docs/02-diseno-de-casos.md) | Las cuatro técnicas clásicas, más la matriz de plataformas que en web no existe |
+| [Matriz de trazabilidad](docs/03-matriz-trazabilidad.md) | 17 casos diseñados, 4 automatizados, y el motivo de cada uno de los 13 que no |
+| [Análisis de riesgos](docs/04-analisis-riesgos.md) | Qué se automatiza, qué se baja a prueba unitaria y qué no se prueba |
+| [Hallazgos](docs/05-hallazgos.md) | **Nueve**, con pasos de reproducción |
+
+Los nueve salieron de una sesión de exploración sobre el emulador, volcando el árbol de
+vistas y probando lo que ningún escenario probaba. No es una contradicción con el verde de
+arriba: una suite comprueba **lo que alguien decidió comprobar**, y esa decisión no se ve
+en el código.
+
+Ahí está también el motivo de que la cobertura sea del 24 % y no suba: **un escenario móvil
+cuesta de diez a veinte veces más que uno web**, y eso convierte la pirámide de pruebas en
+una restricción de presupuesto en lugar de un diagrama de presentación.
+
+---
+
 ## La idea: una suite, dos plataformas
 
 ```
